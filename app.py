@@ -6,7 +6,9 @@ from PySide6.QtWidgets import (
     QHBoxLayout,
     QMainWindow,
     QPushButton,
+    QLabel,
     QSlider,
+    QSizePolicy,
     QSpinBox,
     QVBoxLayout,
     QWidget,
@@ -56,6 +58,14 @@ class MainWindow(QMainWindow):
         layout = QHBoxLayout()
         layout.addLayout(left_layout)
         layout.addLayout(right_layout)
+
+        self.side_label = QLabel()
+        self.side_label.setMinimumWidth(100)
+        self.side_label.setSizePolicy(
+            QSizePolicy.Policy.Expanding,
+            QSizePolicy.Policy.Expanding,
+        )
+        layout.addWidget(self.side_label)
 
         central_widget = QWidget()
         central_widget.setLayout(layout)
