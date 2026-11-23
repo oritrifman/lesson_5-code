@@ -59,13 +59,14 @@ class MainWindow(QMainWindow):
         layout.addLayout(left_layout)
         layout.addLayout(right_layout)
 
-        self.side_label = QLabel()
-        self.side_label.setMinimumWidth(100)
-        self.side_label.setSizePolicy(
+        self.color_box = QLabel()
+        self.color_box.setMinimumWidth(100)
+        self.color_box.setSizePolicy(
             QSizePolicy.Policy.Expanding,
             QSizePolicy.Policy.Expanding,
         )
-        layout.addWidget(self.side_label)
+        self.color_box.setStyleSheet("background-color: rgb(0,0,0);")
+        layout.addWidget(self.color_box)
 
         central_widget = QWidget()
         central_widget.setLayout(layout)
@@ -88,7 +89,7 @@ class MainWindow(QMainWindow):
     def slider_method(self):
         value = self.slider.value()
         self.slider_spin_box.setValue(value)
-            
+        self.color_box.setStyleSheet(f"background-color: rgb({value},{value},{value});")  
         
 if __name__ == "__main__":
     app = QApplication(sys.argv)
