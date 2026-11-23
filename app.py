@@ -3,12 +3,15 @@ from PySide6.QtCore import QTimer
 from PySide6.QtWidgets import (
     QAbstractSpinBox,
     QApplication,
+    QHBoxLayout,
     QMainWindow,
     QPushButton,
+    QSlider,
     QSpinBox,
     QVBoxLayout,
     QWidget,
 )
+from PySide6.QtCore import Qt
 
 
 class MainWindow(QMainWindow):
@@ -28,13 +31,31 @@ class MainWindow(QMainWindow):
         self.spin_box.setButtonSymbols(QAbstractSpinBox.ButtonSymbols.NoButtons)
         self.spin_box.setStyleSheet("QSpinBox { background-color: lightgray; }")
 
+        self.slider_spin_box = QSpinBox()
+        self.slider_spin_box.setRange(0, 255)
+        self.slider_spin_box.setReadOnly(True)
+        self.slider_spin_box.setButtonSymbols(QAbstractSpinBox.ButtonSymbols.NoButtons)
+        self.slider_spin_box.setStyleSheet("QSpinBox { background-color: lightgray; }")
+
+        self.slider = QSlider(Qt.Orientation.Vertical)
+        self.slider.setRange(0, 255)
+        self.slider.valueChanged.connect(self.slider_method)
+
         self.button = QPushButton("Start")
         self.button.setCheckable(True)
         self.button.toggled.connect(self.button_method)
 
-        layout = QVBoxLayout()
-        layout.addWidget(self.spin_box)
-        layout.addWidget(self.button)
+        left_layout = QVBoxLayout()
+        left_layout.addWidget(self.spin_box)
+        left_layout.addWidget(self.button)
+
+        right_layout = QVBoxLayout()
+        right_layout.addWidget(self.slider_spin_box)
+        right_layout.addWidget(self.slider)
+
+        layout = QHBoxLayout()
+        layout.addLayout(left_layout)
+        layout.addLayout(right_layout)
 
         central_widget = QWidget()
         central_widget.setLayout(layout)
@@ -53,6 +74,11 @@ class MainWindow(QMainWindow):
         if self.counter == 500:
             self.timer.stop()
             self.button.setCheked(False)
+
+    def slider_method(self):
+        value = self.slider.value()
+        self.slider_spin_box.setValue(value)
+            
         
 if __name__ == "__main__":
     app = QApplication(sys.argv)
