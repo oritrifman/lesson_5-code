@@ -1,6 +1,14 @@
 import sys
 
-from PySide6.QtWidgets import QApplication, QMainWindow, QPushButton, QSpinBox, QVBoxLayout, QWidget
+from PySide6.QtWidgets import (
+    QAbstractSpinBox,
+    QApplication,
+    QMainWindow,
+    QPushButton,
+    QSpinBox,
+    QVBoxLayout,
+    QWidget,
+)
 
 
 class MainWindow(QMainWindow):
@@ -10,6 +18,9 @@ class MainWindow(QMainWindow):
 
         self.spin_box = QSpinBox()
         self.spin_box.setRange(0, 10_000)
+        self.spin_box.setReadOnly(True)
+        self.spin_box.setButtonSymbols(QAbstractSpinBox.ButtonSymbols.NoButtons)
+        self.spin_box.setStyleSheet("QSpinBox { background-color: lightgray; }")
 
         self.toggle_button = QPushButton("Start")
         self.toggle_button.setCheckable(True)
